@@ -56,7 +56,7 @@ func Create(db *sql.DB, pool *redis.Pool) {
 	created = true
 }
 
-func Get(m Modeler, table string, id int, timeout int) error {
+func Get(m Modeler, table string, id int64, timeout int) error {
 	t := reflect.TypeOf(m)
 	if t.Kind() != reflect.Struct {
 		//panic("Modeler m must be type struce!\n")
@@ -127,7 +127,7 @@ func Get(m Modeler, table string, id int, timeout int) error {
 }
 
 // 将数据写入到redis中，并设置timer到期时，更新数据库
-func Set(m Modeler, table string, id int, timeout int) (err error) {
+func Set(m Modeler, table string, id int64, timeout int) (err error) {
 	var buf []byte
 
 	buf, err = m.Encode()
@@ -202,7 +202,7 @@ func Flush(m Modeler, table string, id int) error {
 	return nil
 }
 
-func queryrow(m Modeler, table string, id int) error {
+func queryrow(m Modeler, table string, id int64) error {
 	query := fmt.Sprintf("SELECT * FROM %s WHERE id=%d;", table, id)
 	row := dbc.db.QueryRow(query)
 	err := m.RowToModel(row)
