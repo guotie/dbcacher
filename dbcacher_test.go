@@ -49,7 +49,7 @@ func (u *User) Encode() ([]byte, error) {
 }
 
 func (u *User) UpdateClause() (string, error) {
-	var clause = "UPDATE users SET %s='%s', %s='%s', %s='%s', %s=%d, %s=%d WHERE id=%d"
+	var clause = "UPDATE users SET %s='%s', %s='%s', %s='%s', %s='%d', %s='%d' WHERE id=%d"
 
 	uc := fmt.Sprintf(clause, "name", u.Name, "passwd", u.Passwd,
 		"descp", u.Descp, "created", u.Created, "birthday", u.Birthday, u.Id)
